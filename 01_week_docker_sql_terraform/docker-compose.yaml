@@ -22,6 +22,25 @@ services:
     volumes:
       - vol-pgadmin_data:/var/lib/pgadmin
 
+  etl_pipeline:
+    container_name: etl_pipeline
+    image: ramiz732/ny_taxi
+    command:
+      [
+        "python",
+        "script.py",
+        "--user",
+        "postgres",
+        "--password",
+        "postgres",
+        "--host",
+        "db",
+        "--port",
+        "5432",
+        "--db",
+        "ny_taxi",
+      ]
+
 volumes:
   vol-pgdata:
     name: vol-pgdata

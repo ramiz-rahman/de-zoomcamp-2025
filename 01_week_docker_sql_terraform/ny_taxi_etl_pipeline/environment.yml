@@ -1,0 +1,17 @@
+name: base
+channels:
+  - conda-forge
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+dependencies:
+  - pip
+  - python=3.12
+  - psycopg2
+  - jupyter
+  - matplotlib
+  - pandas
+  - requests
+  - seaborn
+  - sqlalchemy
+  - toolz
+  - pytest
