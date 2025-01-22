@@ -209,3 +209,39 @@ ON
 ```
 
 **Answer**: East Harlem North, East Harlem South, Morningside Heights
+
+### Question 6: Largest tip
+
+```
+SELECT
+	"DOLocationID",
+	total_tip,
+	"LocationID",
+	"Zone"
+FROM
+	(SELECT
+		"DOLocationID",
+		MAX(tip_amount) AS total_tip
+	FROM
+		green_taxi_trips
+	JOIN
+		zones
+	ON
+		"PULocationID" = "LocationID"
+	WHERE
+		DATE_TRUNC('MONTH', lpep_pickup_datetime) = DATE_TRUNC('MONTH', DATE '2019-10-01')
+		AND "Zone" = 'East Harlem North'
+	GROUP BY
+		"DOLocationID"
+	ORDER BY
+		total_tip DESC
+	LIMIT
+		1
+	) AS max_tip
+JOIN
+	zones
+ON
+	"DOLocationID" = "LocationID"
+```
+
+**Answer**: JFK Airport
