@@ -157,3 +157,24 @@ WHERE
 **Answer**: 35,189
 
 So our final answer will be: `104,802; 198,924; 109,603; 27,678; 35,189`
+
+### Question 4: Longest trip each day
+
+Which was the pick up day with the longest trip distance?
+
+```
+SELECT
+	lpep_pickup_datetime
+FROM
+	green_taxi_trips AS trips
+JOIN
+	(SELECT
+		MAX(trip_distance) AS dist
+	FROM
+		green_taxi_trips
+	) AS max_dist
+ON
+	trips.trip_distance = max_dist.dist
+```
+
+**Answer**: 2019-10-31
