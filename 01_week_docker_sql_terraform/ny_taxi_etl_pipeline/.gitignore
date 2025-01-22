@@ -1,0 +1,117 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+*.egg
+build/
+dist/
+wheelhouse/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.venv/
+venv/
+env/
+*.env
+*.venv
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Testing
+.tox/
+.nox/
+coverage.*
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+.pyre/
+
+# Cython
+*.c
+*.so
+*.pyd
+*.o
+*.pyc
+
+# Editor & IDE specific
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# Environment variables and secrets
+.env
+*.env
+secrets.json
+
+# Caches
+.cache/
+*.bak
+*.swp
+*.swo
+*.swn
+*.~ 
+.DS_Store
+
+# Generated files
+*.ipynb_checkpoints/
+*.manifest
+*.lock
+yarn-error.log
+npm-debug.log
+*.lock
+
+# Documentation builds
+docs/_build/
+
+# Local development overrides
+local_settings.py
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Profiling data
+.prof
+*.prof
+*.lprof
+
+# Jupyter Notebook outputs
+**/.ipynb_checkpoints
+**/*.nbconvert.ipynb
+
+# Data files
+data/
+*.csv
+*.tsv
+*.parquet
+*.h5
+*.json
+*.xml
+
+# AWS
+.aws/
+*.pem
+
+# Ignore pre-commit hooks
+.pre-commit-config.yaml
+.pre-commit-cache/
