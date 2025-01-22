@@ -245,3 +245,35 @@ ON
 ```
 
 **Answer**: JFK Airport
+
+---
+
+## Prepare Terraform
+
+- Create a folder for terraform.
+- Create a variables.tf to manage all config in one place.
+- Download the GCP credentials and store it as a `cred_key.json` file in the terraform folder.
+- In the project `.gitignore` file, ensure tha the key is not tracked.
+- Save the path to the key as a variable in the variables.tf file.
+- Add the provider plugin and write the resource requests in the main.tf file.
+- From the terminal, go to the terraform folder.
+- Run `terraform init` to setup terraform
+- Run `terraform plan` to preview the changes in GCP
+- Run `terraform apply` to deploy the changes and spin up resources
+- Run `terraform destroy` to wind down resources and remove them from GCP.
+
+---
+
+### Question 7: Terraform Workflow
+
+1. Downloading the provider plugins and setting up backend
+
+- `terraform init`
+
+2. Generating proposed changes and auto-executing the plan
+
+- `terraform apply -auto-approve`
+
+3. Remove all resources managed by terraform
+
+- `terraform destroy`
