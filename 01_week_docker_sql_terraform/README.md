@@ -31,8 +31,13 @@ Thus, we are going to take the following approach:
   - Some packages, such as `psycopg2` cause problems when installed with `pip`. In order to avoid these complications, and make our lives simpler, we will be using `miniconda` as our base image.
   - `FROM continuumio/miniconda3`
   - Since we will be manipulating CSV data and connecting to a Postgres database, we will need the `pandas`, `sqlalchemy`, and `psycopg2` packages.
-  - Therefore, we add the following line to our Dockerfile to create a custom layer on top of the base `miniconda` image.
-  - `RUN conda install pandas sqlalchemy psycopg2`
+  - Therefore, we will create a local conda environment, install our packages, and then export it to a yml file using the following command:
+  - `conda env export --no-builds --from-history > environment.yml`
+  - Then we will copy over the `environment.yml` to our container's filesystem using the following command:
+  - `COPY environment.yml /app/`
+  - Then we will recreate the environment inside our Docker container. To do so, we will add the following code to our Dockerfile to create a custom layer on top of the base `miniconda` image.
+  - `RUN conda env update --name base --file /app/environment.yml && conda clean --all -y`
+  - `RUN conda init bash`
 - Write a Python script that will:
   - Download the datasets from the source URLs
   - Load the datasets into a usable format (ie. Pandas Dataframe)
@@ -41,7 +46,8 @@ Thus, we are going to take the following approach:
   - Generate the appropriate schema, if required, for the new tables
   - Iteratively chunk and load the transformed data into the database
   - Close the database connection and perform clean up.
-- Setup a command to run the script when the container is instantiated
+- Setup a command to run the script when the container is instantiated. We will add the following command to our `docker-compose.yaml` file:
+- `command:["python","script.py","--user","postgres", "--password","postgres","--host","db","--port","5432","--db","ny_taxi"]`
 
 ---
 
