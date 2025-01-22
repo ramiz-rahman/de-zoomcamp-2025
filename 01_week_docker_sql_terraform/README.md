@@ -42,3 +42,118 @@ Thus, we are going to take the following approach:
   - Iteratively chunk and load the transformed data into the database
   - Close the database connection and perform clean up.
 - Setup a command to run the script when the container is instantiated
+
+---
+
+### Q3 Trip Segmentation Count
+
+The number of trips that happened during the period of October 1st 2019 (inclusive) and November 1st 2019 (exclusive).
+
+To get all the trips, we can run the following query.
+
+```
+SELECT
+	*
+FROM
+	green_taxi_trips
+WHERE
+	lpep_pickup_datetime >= DATE '2019-10-01'
+	AND lpep_dropoff_datetime < DATE '2019-11-01'
+ORDER BY
+	lpep_pickup_datetime, lpep_dropoff_datetime
+```
+
+If we just want the number, we can use the `COUNT` aggregate function and remove the `ORDER BY` clause.
+
+```
+SELECT
+	COUNT(*)
+FROM
+	green_taxi_trips
+WHERE
+	lpep_pickup_datetime >= DATE '2019-10-01'
+	AND lpep_dropoff_datetime < DATE '2019-11-01'
+```
+
+**Answer**: 476,196
+
+#### Trips up To 1 Mile
+
+Based on the [data dictionary](https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_green.pdf), the `trip_distance` column gives us the trip distance in miles.
+
+Thus our query will be:
+
+```
+SELECT
+	COUNT(*)
+FROM
+	green_taxi_trips
+WHERE
+	lpep_pickup_datetime >= DATE '2019-10-01'
+	AND lpep_dropoff_datetime < DATE '2019-11-01'
+	AND trip_distance <= 1.00
+```
+
+**Answer**: 104,802
+
+#### Trips in between 1 (exclusive) and 3 miles (inclusive)
+
+```
+SELECT
+	COUNT(*)
+FROM
+	green_taxi_trips
+WHERE
+	lpep_pickup_datetime >= DATE '2019-10-01'
+	AND lpep_dropoff_datetime < DATE '2019-11-01'
+	AND (trip_distance > 1.00 AND trip_distance <= 3.00)
+```
+
+**Answer**: 198,924
+
+#### Trips in between 3 (exclusive) and 7 miles (inclusive)
+
+```
+SELECT
+	COUNT(*)
+FROM
+	green_taxi_trips
+WHERE
+	lpep_pickup_datetime >= DATE '2019-10-01'
+	AND lpep_dropoff_datetime < DATE '2019-11-01'
+	AND (trip_distance > 3.00 AND trip_distance <= 7.00)
+```
+
+**Answer**: 109,603
+
+#### Trips in between 7 (exclusive) and 10 miles (inclusive)
+
+```
+SELECT
+	COUNT(*)
+FROM
+	green_taxi_trips
+WHERE
+	lpep_pickup_datetime >= DATE '2019-10-01'
+	AND lpep_dropoff_datetime < DATE '2019-11-01'
+	AND (trip_distance > 7.00 AND trip_distance <= 10.00)
+```
+
+**Answer**: 27,678
+
+#### Trips over 10 miles
+
+```
+SELECT
+	COUNT(*)
+FROM
+	green_taxi_trips
+WHERE
+	lpep_pickup_datetime >= DATE '2019-10-01'
+	AND lpep_dropoff_datetime < DATE '2019-11-01'
+	AND trip_distance > 10.00
+```
+
+**Answer**: 35,189
+
+So our final answer will be: `104,802; 198,924; 109,603; 27,678; 35,189`
