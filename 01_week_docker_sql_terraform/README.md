@@ -178,3 +178,34 @@ ON
 ```
 
 **Answer**: 2019-10-31
+
+### Question 5: Three biggest pickup zones
+
+Which were the top pickup locations with over `13,000` in `total_amount` (across all trips) for 2019-10-18?
+
+According to the question, we should only use `lpep_pickup_datetime` when filtering by date. Therefore, our SQL query will be:
+
+```
+SELECT
+	"Zone"
+FROM
+	(SELECT
+		"PULocationID",
+		ROUND(SUM(total_amount)) AS total_amount
+	FROM
+		green_taxi_trips
+	WHERE
+		DATE_TRUNC('DAY', lpep_pickup_datetime) = DATE '2019-10-18'
+	GROUP BY
+		"PULocationID"
+	ORDER BY
+		total_amount DESC
+	LIMIT 3) AS top_3
+
+JOIN
+	zones
+ON
+	"PULocationID" = "LocationID"
+```
+
+**Answer**: East Harlem North, East Harlem South, Morningside Heights
